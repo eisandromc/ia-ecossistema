@@ -1,0 +1,145 @@
+versao: 1.2.0
+tipo: catalogo_de_acao_referencial
+escopo: ChatGPT com ferramentas realmente conectadas na sessão
+nota: Esta configuração NÃO é um executor de OAuth, cliente HTTP ou registro automático no loader local.
+padrao_de_acesso: menor_privilegio
+aprovacao_exigida_para:
+- escrita
+- envio
+- exclusao
+- compartilhamento
+conectores:
+  google_drive:
+    requer_conexao_por_sessao: true
+    plataforma: ChatGPT
+    ultimo_teste_leitura: conexao_respondeu_nesta_conversa
+  github:
+    requer_conexao_por_sessao: true
+    plataforma: ChatGPT
+    ultimo_teste_leitura: conexao_respondeu_nesta_conversa
+    github_projects_v2: nao_confirmado_nas_ferramentas
+  gmail:
+    requer_conexao_por_sessao: true
+    plataforma: ChatGPT
+    ultimo_teste_leitura: plugin_nao_instalado_nesta_conversa
+acoes:
+- id: drive.pesquisar
+  provedor: google_drive
+  tipo: leitura
+  ferramenta_conector: mcp__Google_Drive__search
+  disponibilidade: na_sessao
+  requer_aprovacao_especifica: false
+- id: drive.metadados
+  provedor: google_drive
+  tipo: leitura
+  ferramenta_conector: mcp__Google_Drive__get_file_metadata
+  disponibilidade: na_sessao
+  requer_aprovacao_especifica: false
+- id: drive.ler
+  provedor: google_drive
+  tipo: leitura
+  ferramenta_conector: mcp__Google_Drive__fetch
+  disponibilidade: na_sessao
+  requer_aprovacao_especifica: false
+- id: drive.listar_pasta
+  provedor: google_drive
+  tipo: leitura
+  ferramenta_conector: mcp__Google_Drive__list_folder
+  disponibilidade: na_sessao
+  requer_aprovacao_especifica: false
+- id: drive.criar_pasta
+  provedor: google_drive
+  tipo: escrita
+  ferramenta_conector: mcp__Google_Drive__create_folder
+  disponibilidade: na_sessao
+  requer_aprovacao_especifica: true
+- id: drive.criar_arquivo
+  provedor: google_drive
+  tipo: escrita
+  ferramenta_conector: mcp__Google_Drive__upload_file
+  disponibilidade: na_sessao
+  requer_aprovacao_especifica: true
+- id: drive.atualizar_arquivo
+  provedor: google_drive
+  tipo: escrita
+  ferramenta_conector: mcp__Google_Drive__update_file
+  disponibilidade: na_sessao
+  requer_aprovacao_especifica: true
+- id: github.localizar_repositorio
+  provedor: github
+  tipo: leitura
+  ferramenta_conector: mcp__GitHub__search_repositories
+  disponibilidade: na_sessao
+  requer_aprovacao_especifica: false
+- id: github.obter_repositorio
+  provedor: github
+  tipo: leitura
+  ferramenta_conector: mcp__GitHub__get_repo
+  disponibilidade: na_sessao
+  requer_aprovacao_especifica: false
+- id: github.ler_arquivo
+  provedor: github
+  tipo: leitura
+  ferramenta_conector: mcp__GitHub__fetch_file
+  disponibilidade: na_sessao
+  requer_aprovacao_especifica: false
+- id: github.buscar_issues
+  provedor: github
+  tipo: leitura
+  ferramenta_conector: mcp__GitHub__search_issues
+  disponibilidade: na_sessao
+  requer_aprovacao_especifica: false
+- id: github.buscar_prs
+  provedor: github
+  tipo: leitura
+  ferramenta_conector: mcp__GitHub__search_prs
+  disponibilidade: na_sessao
+  requer_aprovacao_especifica: false
+- id: github.criar_issue
+  provedor: github
+  tipo: escrita
+  ferramenta_conector: mcp__GitHub__create_issue
+  disponibilidade: na_sessao
+  requer_aprovacao_especifica: true
+- id: github.criar_branch
+  provedor: github
+  tipo: escrita
+  ferramenta_conector: mcp__GitHub__create_branch
+  disponibilidade: na_sessao
+  requer_aprovacao_especifica: true
+- id: github.criar_pr
+  provedor: github
+  tipo: escrita
+  ferramenta_conector: mcp__GitHub__create_pull_request
+  disponibilidade: na_sessao
+  requer_aprovacao_especifica: true
+- id: github.atualizar_arquivo
+  provedor: github
+  tipo: escrita
+  ferramenta_conector: mcp__GitHub__update_file
+  disponibilidade: na_sessao
+  requer_aprovacao_especifica: true
+- id: gmail.localizar_conversas
+  provedor: gmail
+  tipo: leitura
+  ferramenta_conector: null
+  disponibilidade: requer_conectar_plugin
+  requer_aprovacao_especifica: false
+- id: gmail.ler_conversa
+  provedor: gmail
+  tipo: leitura
+  ferramenta_conector: null
+  disponibilidade: requer_conectar_plugin
+  requer_aprovacao_especifica: false
+- id: gmail.criar_rascunho
+  provedor: gmail
+  tipo: escrita
+  ferramenta_conector: null
+  disponibilidade: requer_conectar_plugin
+  requer_aprovacao_especifica: true
+- id: gmail.responder_conversa
+  provedor: gmail
+  tipo: envio
+  ferramenta_conector: null
+  disponibilidade: requer_conectar_plugin
+  requer_aprovacao_especifica: true

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Leitor local de arquivos de prompt" />
+    <title>Prompt Listador</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">⌁</span>
+          <div>
+            <p class="eyebrow">BIBLIOTECA LOCAL</p>
+            <h1>Prompt Listador</h1>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <a class="button button-secondary" href="../index.html" aria-label="Voltar ao menu principal"><span aria-hidden="true">←</span> Menu</a>
+          <button id="themeButton" class="icon-button" type="button" aria-label="Alternar tema" title="Alternar tema">◐</button>
+        </div>
+      </header>
+
+      <section class="workspace" aria-label="Leitor de prompts">
+        <aside class="sidebar">
+          <div class="sidebar-heading">
+            <div>
+              <p class="eyebrow">PASTA DE PROMPTS</p>
+              <h2 id="fileCounter">Carregando…</h2>
+            </div>
+          </div>
+
+          <label class="search-box" for="searchInput">
+            <span aria-hidden="true">⌕</span>
+            <input id="searchInput" type="search" placeholder="Filtrar arquivos" autocomplete="off" />
+          </label>
+
+          <nav id="fileList" class="file-list" aria-label="Arquivos de prompt">
+            <div class="empty-list">
+              <span aria-hidden="true">⌁</span>
+              <p>Carregando seus prompts…</p>
+              <small>Pasta padrão: <code>prompts/</code></small>
+            </div>
+          </nav>
+
+          <p class="supported-files">Arquivos definidos em <code>prompts/index.json</code></p>
+        </aside>
+
+        <article class="reader-panel">
+          <div class="reader-toolbar">
+            <div class="file-info">
+              <p id="filePath" class="file-path">PASTA FIXA · PROMPTS/</p>
+              <h2 id="promptTitle">Carregando biblioteca</h2>
+            </div>
+            <div class="reader-actions">
+              <button id="decreaseFont" class="icon-button" type="button" aria-label="Diminuir fonte" title="Diminuir fonte" disabled>A−</button>
+              <button id="increaseFont" class="icon-button" type="button" aria-label="Aumentar fonte" title="Aumentar fonte" disabled>A+</button>
+              <button id="copyButton" class="button button-secondary" type="button" disabled>Copiar</button>
+            </div>
+          </div>
+
+          <div class="view-switcher" role="tablist" aria-label="Modo de leitura">
+            <button id="codeMode" class="view-tab active" type="button" role="tab" aria-selected="true" aria-controls="codeView">Código Markdown</button>
+            <button id="previewMode" class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="previewView">Visualização</button>
+          </div>
+
+          <div id="reader" class="reader" tabindex="0" aria-live="polite">
+            <pre id="codeView" class="markdown-code" aria-label="Código Markdown"></pre>
+            <article id="previewView" class="markdown-preview" hidden aria-label="Visualização do Markdown"></article>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="script.js"></script>
+  </body>
+</html>

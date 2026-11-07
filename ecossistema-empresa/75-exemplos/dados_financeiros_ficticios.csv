@@ -1,0 +1,11 @@
+cliente,competencia,valor_faturado,valor_recebido,custo_direto
+Cliente Aurora,2026-09,42000,35000,18000
+Cliente Boreal,2026-09,31000,31000,15000
+Cliente Horizonte,2026-09,25000,20000,12000
+Cliente Prisma,2026-09,38000,27000,17000
+Cliente Vale,2026-09,14000,14000,8000
+Cliente Aurora,2026-10,46000,42000,19000
+Cliente Boreal,2026-10,30000,26000,14800
+Cliente Horizonte,2026-10,28000,26000,13300
+Cliente Prisma,2026-10,41000,36000,18000
+Cliente Vale,2026-10,16000,16000,9000

@@ -1,0 +1,75 @@
+# Manifesto do ecossistema — o Instalador e o validador leem SÓ este arquivo.
+# Cada recurso: id (prefixo define o tipo), arquivo, usa (ids que ele pode chamar ou consultar).
+nome: Ecossistema Educação
+versao: 1.0.0
+idioma: pt-BR
+autonomia: perguntar-antes        # perguntar-antes | agir-e-relatar
+raiz: dom.educacao
+protocolo: _protocolo/protocolo.md
+plataformas: [claude, chatgpt, copilot, github-copilot]
+testes: 90-testes/casos.md
+
+recursos:
+  # 00 — Domínio
+  - id: dom.educacao
+    arquivo: 00-dominio/dom.educacao.md
+    usa: [orq.pedagogico, orq.gestao-escolar]
+
+  # 10 — Orquestradores
+  - id: orq.pedagogico
+    arquivo: 10-orquestradores/orq.pedagogico.md
+    usa: [ag.planejador, ag.material, ag.avaliador, ma.conselho-revisor, wf.semana-letiva]
+  - id: orq.gestao-escolar
+    arquivo: 10-orquestradores/orq.gestao-escolar.md
+    usa: [ag.comunicados, ag.indicadores]
+
+  # 20 — Multiagentes
+  - id: ma.conselho-revisor
+    arquivo: 20-multiagentes/ma.conselho-revisor.md
+    usa: [ag.planejador, ag.avaliador]
+
+  # 30 — Agentes
+  - id: ag.planejador
+    arquivo: 30-agentes/ag.planejador.md
+    usa: [sk.plano-aula, rag.plano-curso]
+  - id: ag.material
+    arquivo: 30-agentes/ag.material.md
+    usa: [sa.revisor, rag.plano-curso]
+  - id: ag.avaliador
+    arquivo: 30-agentes/ag.avaliador.md
+    usa: [sk.rubrica, sa.questoes, rag.plano-curso]
+  - id: ag.comunicados
+    arquivo: 30-agentes/ag.comunicados.md
+    usa: [sa.revisor, rag.regimento]
+  - id: ag.indicadores
+    arquivo: 30-agentes/ag.indicadores.md
+    usa: []
+
+  # 40 — Subagentes
+  - id: sa.revisor
+    arquivo: 40-subagentes/sa.revisor.md
+    usa: []
+  - id: sa.questoes
+    arquivo: 40-subagentes/sa.questoes.md
+    usa: []
+
+  # 50 — Workflows
+  - id: wf.semana-letiva
+    arquivo: 50-workflows/wf.semana-letiva.md
+    usa: [ag.planejador, ag.material, ag.avaliador, ma.conselho-revisor]
+
+  # 60 — Skills (formato nativo SKILL.md)
+  - id: sk.plano-aula
+    arquivo: 60-skills/sk.plano-aula/SKILL.md
+    usa: []
+  - id: sk.rubrica
+    arquivo: 60-skills/sk.rubrica/SKILL.md
+    usa: []
+
+  # 70 — RAG
+  - id: rag.plano-curso
+    arquivo: 70-rag/rag.plano-curso.md
+    usa: []
+  - id: rag.regimento
+    arquivo: 70-rag/rag.regimento.md
+    usa: []

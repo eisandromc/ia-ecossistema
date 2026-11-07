@@ -1,0 +1,32 @@
+{
+  "prompts": [
+    {
+      "title": "Faturamento e recebimentos",
+      "path": "00_Faturamento_e_Recebimentos.md"
+    },
+    {
+      "title": "Prompt mestre — Painel de dados",
+      "path": "01_Prompt_Mestre_Dashboard.md"
+    },
+    {
+      "title": "Prompt mestre — Páginas e sites",
+      "path": "02_Prompt_Mestre_Pagina_Web.md"
+    },
+    {
+      "title": "Prompt mestre — Modelos de documentos",
+      "path": "03_Prompt_Mestre_Modelos_Documentos.md"
+    },
+    {
+      "title": "RELATÓRIO EXECUTIVO COM DADOS",
+      "path": "03_Prompt_Mestre_Relatorio_dados.md"
+    },
+    {
+      "title": "Prompt mestre — Painel de gestão de projetos",
+      "path": "04_Prompt_Mestre_Painel_Gestao_Projetos.md"
+    },
+    {
+      "title": "Prompt mestre — Apresentações corporativas",
+      "path": "05_Prompt_Mestre_Apresentacoes_Corporativas.md"
+    }
+  ]
+}

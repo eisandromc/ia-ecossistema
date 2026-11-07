@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Painel da Fábrica de IA</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><rect x="1" y="1" width="28" height="28" rx="6" fill="#1D5FC2"/><rect x="11" y="6" width="8" height="5" rx="1.5" fill="#E7EDF4"/><rect x="5" y="19" width="7" height="5" rx="1.5" fill="#E7EDF4"/><rect x="18" y="19" width="7" height="5" rx="1.5" fill="#E7EDF4"/><path d="M15 11v4M8.5 19v-4h13v4" stroke="#E7EDF4" stroke-width="1.6" fill="none"/></svg>
+      <div><b>Fábrica de IA</b><span>Painel interativo</span></div>
+    </div>
+    <div class="eco">
+      <div class="menu-wrap">
+        <button class="eco-btn" id="btnEco" aria-haspopup="true" aria-expanded="false" title="Trocar de ecossistema"><span id="ecoName">—</span><span aria-hidden="true">▾</span></button>
+        <div class="menu" id="ecoMenu" hidden></div>
+      </div>
+      <div class="eco-info"><span class="tag" id="ecoVer">v—</span><span class="cnt" id="ecoCount"></span></div>
+    </div>
+    <div class="top-actions">
+      <button class="tbtn conn-pill" id="btnConn" data-st="idle" title="Conexão com o modelo"><span class="dot"></span><span id="connLabel">Simulação</span></button>
+      <div class="menu-wrap">
+        <button class="tbtn" id="btnFile" aria-haspopup="true" aria-expanded="false">Arquivo ▾</button>
+        <div class="menu" id="fileMenu" hidden>
+          <button data-act="import">Importar pacote<small>.zip, arquivo único .md ou ecosystem.yaml + .md</small></button>
+          <button data-act="example">Reabrir ecossistema selecionado<small>Substitui o ecossistema aberto</small></button>
+          <button data-act="gen">Gerar ecossistema<small>A Fábrica cria um novo e substitui o aberto</small></button>
+          <button data-act="evo">Evoluir ecossistema<small>Pede uma mudança no ecossistema aberto</small></button>
+          <button data-act="zip">Exportar pacote .zip<small>Estrutura completa, pronta para o INSTALL.md</small></button>
+          <button data-act="single">Exportar arquivo único .md<small>Para anexar em qualquer plataforma</small></button>
+          <button data-act="telemetry">Exportar telemetria .json<small>Chamadas, eventos e tarefas da última execução</small></button>
+        </div>
+      </div>
+      <input type="file" id="fileImport" multiple accept=".zip,.md,.yaml,.yml,.txt,.csv" hidden>
+      <button class="tbtn" id="btnTheme" aria-label="Alternar tema claro e escuro" title="Alternar tema"><svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.5a6.5 6.5 0 0 1 0 13z" fill="currentColor"/></svg></button>
+    </div>
+  </header>
+
+  <main class="work">
+    <!-- LEFT -->
+    <aside class="panel left" aria-label="Recursos do ecossistema">
+      <div class="panel-h"><h2>Hierarquia</h2><button class="btn sm" id="btnAdd">+ Adicionar</button></div>
+      <div class="search"><input type="search" id="search" placeholder="Buscar em todos os níveis" aria-label="Filtrar recursos"></div>
+      <div class="res-list" id="resList"></div>
+      <div class="val">
+        <details id="valCaixa">
+          <summary class="panel-h"><h2>Validação</h2><span class="chip" id="valBadge">—</span></summary>
+          <div class="val-list" id="valList"></div>
+        </details>
+      </div>
+    </aside>
+
+    <div class="split split-v" data-split="esq" role="separator" aria-orientation="vertical" tabindex="0" title="Arraste para ajustar. Clique duplo restaura o tamanho."></div>
+
+    <!-- CENTER -->
+    <section class="center">
+      <div class="panel canvas-wrap" id="canvasWrap">
+        <div class="canvas-bar">
+          <small class="canvas-sub" id="canvasSub"></small>
+          <div class="tools">
+            <div class="menu-wrap">
+              <button class="btn sm" id="btnExibir" aria-haspopup="true" aria-expanded="false">Exibir ▾</button>
+              <div class="menu" id="exibirMenu" hidden>
+                <button id="btnExpandLevel">Expandir nível<small>Abre mais um nível da hierarquia</small></button>
+                <button id="btnExpandAll">Expandir tudo<small>Mostra todos os recursos</small></button>
+                <button id="btnCollapseAll">Recolher<small>Volta a mostrar só o topo</small></button>
+                <button id="btnLayout">Reorganizar<small>Refaz a disposição do mapa</small></button>
+                <label class="chk menu-chk"><input type="checkbox" id="optConsultas"> Mostrar todas as consultas</label>
+              </div>
+            </div>
+            <button class="btn sm" id="btnLink" aria-pressed="false" title="Clique na origem e depois no destino">Ligar</button>
+            <button class="btn sm" id="btnFit" title="Enquadra o mapa">Ajustar</button>
+            <button class="btn sm" id="zoomOut" aria-label="Afastar">−</button>
+            <button class="btn sm" id="zoomIn" aria-label="Aproximar">+</button>
+            <div class="vis" role="group" aria-label="Painéis visíveis">
+              <button class="btn sm" data-painel="esq" aria-pressed="true" title="Mostrar ou recolher a Hierarquia" aria-label="Hierarquia"><svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="3" y="4" width="3.5" height="8" fill="currentColor"/></svg></button>
+              <button class="btn sm" data-painel="base" aria-pressed="true" title="Mostrar ou recolher a Telemetria" aria-label="Telemetria"><svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="3" y="9" width="10" height="3" fill="currentColor"/></svg></button>
+              <button class="btn sm" data-painel="dir" aria-pressed="true" title="Mostrar ou recolher o painel de Prompt, Entregáveis, Inspetor e Conexão" aria-label="Painel direito"><svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="9.5" y="4" width="3.5" height="8" fill="currentColor"/></svg></button>
+              <button class="btn sm" id="btnSoMapa" aria-pressed="false" title="Recolhe todos os painéis e deixa só o mapa">Só o mapa</button>
+            </div>
+          </div>
+        </div>
+        <div class="graph-box">
+        <svg id="graph" role="img" aria-label="Organograma do ecossistema">
+          <defs>
+            <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" style="fill:var(--line-strong)"/></marker>
+            <marker id="arrA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" style="fill:var(--accent)"/></marker>
+          </defs>
+          <g id="vp"><g id="gBands"></g><g id="gEdges"></g><g id="gNodes"></g><g id="gFx"></g></g>
+        </svg>
+        </div>
+        <div class="stage">
+          <div class="nar" role="log" aria-live="polite"><span class="nar-ava" id="narAva" aria-hidden="true">🧭</span><span class="nar-t" id="narTxt"></span></div>
+          <div class="stage-ctl">
+            <button class="btn sm primary" id="btnNext" hidden title="Atalho: barra de espaço">Próximo ▶</button>
+            <label class="chk" title="Pausa antes de cada envelope e de cada chamada ao modelo"><input type="checkbox" id="optStep"> Passo a passo</label>
+            <div class="spd" role="group" aria-label="Velocidade da animação">
+              <button data-speed="0.5" aria-pressed="false" title="Devagar" aria-label="Devagar">🐢</button>
+              <button data-speed="1" aria-pressed="true" title="Normal" aria-label="Normal">🚶</button>
+              <button data-speed="2.5" aria-pressed="false" title="Rápido" aria-label="Rápido">🐇</button>
+            </div>
+            <button class="btn sm" id="btnLegenda" aria-pressed="false">Legenda</button>
+            <button class="btn sm" id="btnDemo">▶ Demonstração</button>
+          </div>
+        </div>
+        <div class="legend" id="legend" hidden></div>
+        <div class="linkhint" id="linkHint" hidden></div>
+      </div>
+
+      <div class="split split-h" data-split="base" role="separator" aria-orientation="horizontal" tabindex="0" title="Arraste para ajustar. Clique duplo restaura o tamanho."></div>
+
+      <div class="panel telemetry">
+        <div class="kpis" id="kpis"></div>
+        <div class="tabs" role="tablist" aria-label="Telemetria">
+          <button class="tab" role="tab" data-ttab="tl" aria-selected="true">Linha do tempo</button>
+          <button class="tab" role="tab" data-ttab="ev" aria-selected="false">Eventos<span class="n" id="nEv"></span></button>
+          <button class="tab" role="tab" data-ttab="ch" aria-selected="false">Chamadas<span class="n" id="nCh"></span></button>
+          <button class="tab" role="tab" data-ttab="qb" aria-selected="false">Quadro de Estado<span class="n" id="nQb"></span></button>
+          <button class="tab" role="tab" data-ttab="pr" aria-selected="false">Por recurso</button>
+        </div>
+        <div class="tbody" id="tBody"></div>
+      </div>
+    </section>
+
+    <div class="split split-v" data-split="dir" role="separator" aria-orientation="vertical" tabindex="0" title="Arraste para ajustar. Clique duplo restaura o tamanho."></div>
+
+    <!-- RIGHT -->
+    <aside class="panel right" aria-label="Prompt, inspetor e conexão">
+      <div class="tabs" role="tablist">
+        <button class="tab" role="tab" data-rtab="prompt" aria-selected="true">Prompt</button>
+        <button class="tab" role="tab" data-rtab="ent" aria-selected="false">Entregáveis</button>
+        <button class="tab" role="tab" data-rtab="insp" aria-selected="false">Inspetor</button>
+        <button class="tab" role="tab" data-rtab="conn" aria-selected="false">Conexão</button>
+      </div>
+
+      <!-- PROMPT -->
+      <div class="pane" id="paneprompt">
+        <div class="chat" id="chat" role="log" aria-label="Conversa">
+          <p class="empty" id="chatVazio">Envie um pedido. As respostas aparecem aqui, e o grafo mostra os elementos usados.</p>
+          <div class="chat-hist" id="chatHist"></div>
+          <div class="card-box gate" id="gate" hidden></div>
+          <div class="status-line" id="statusLine"></div>
+        </div>
+        <div class="composer">
+          <label class="modo-linha"><span>Resposta por</span><select id="modoEscolha" aria-label="Quem responde ao prompt"></select><span class="chip" id="modoCusto"></span></label>
+          <textarea id="prompt" rows="3" aria-label="Prompt" placeholder="Escreva o que você precisa"></textarea>
+          <div class="run-row">
+            <button class="btn sm" id="btnNova" hidden>Nova conversa</button>
+            <button class="btn" id="btnStop" hidden>Parar</button>
+            <button class="btn primary" id="btnRun">Enviar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ENTREGÁVEIS -->
+      <div class="pane" id="paneent" hidden></div>
+
+      <!-- INSPECTOR -->
+      <div class="pane" id="paneinsp" hidden></div>
+
+      <!-- CONNECTION -->
+      <div class="pane" id="paneconn" hidden>
+        <div id="connCorpo"></div>
+        <details class="opts">
+          <summary>Opções de execução</summary>
+          <div class="opts-body">
+            <label class="chk"><input type="checkbox" id="optGates" checked> Pausar nos portões</label>
+            <label class="chk"><input type="checkbox" id="optAnim" checked> Animar fluxo no grafo</label>
+            <label class="chk" title="Aproxima a câmera de cada envelope. Arrastar ou dar zoom devolve o controle a você."><input type="checkbox" id="optCam" checked> Câmera segue a chamada</label>
+            <label class="fld">Limite de chamadas<input type="number" id="optBudget" min="3" max="200" value="30"></label>
+            <label class="fld">Máx. tarefas por plano<input type="number" id="optTasks" min="1" max="8" value="5"></label>
+          </div>
+        </details>
+      </div>
+    </aside>
+  </main>
+</div>
+
+<div class="modal" id="modal" hidden></div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+
+<script src="/vendor/js-yaml.min.js"></script>
+<script src="/vendor/jszip.min.js"></script>
+<script src="/js/util.js"></script>
+<script src="/js/modelo.js"></script>
+<script src="/js/grafo.js"></script>
+<script src="/js/edicao.js"></script>
+<script src="/js/paineis.js"></script>
+<script src="/js/layout.js"></script>
+<script src="/js/arquivo.js"></script>
+<script src="/js/conexao.js"></script>
+<script src="/js/telemetria.js"></script>
+<script src="/js/entregaveis.js"></script>
+<script src="/js/motor.js"></script>
+<script src="/js/simulacao.js"></script>
+<script src="/js/fabrica.js"></script>
+<script src="/js/prompt.js"></script>
+<script src="/js/markdown.js"></script>
+<script src="/js/ludico.js"></script>
+<script src="/js/inicio.js"></script>
+</body>
+</html>

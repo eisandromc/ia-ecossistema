@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Visualizador local de documentos" />
+    <title>Leitor de Arquivos</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">▣</span>
+          <div>
+            <p class="eyebrow">PASTA ARQUIVOS</p>
+            <h1>Leitor de documentos</h1>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <p class="privacy-note">Os arquivos permanecem neste computador.</p>
+          <a class="button button-secondary" href="../index.html" aria-label="Voltar ao menu principal"><span aria-hidden="true">←</span>&nbsp;Menu</a>
+        </div>
+      </header>
+
+      <section class="workspace" aria-label="Área de leitura de documentos">
+        <aside class="sidebar" aria-label="Arquivos da pasta">
+          <p id="folderName" class="folder-name">arquivos/</p>
+
+          <div class="filter-wrap">
+            <label class="sr-only" for="fileFilter">Filtrar arquivos</label>
+            <input id="fileFilter" type="search" placeholder="Filtrar arquivos" autocomplete="off" />
+          </div>
+
+          <p id="fileCount" class="file-count">Lendo a pasta…</p>
+          <ul id="fileList" class="file-list" aria-label="Pastas e arquivos"></ul>
+        </aside>
+
+        <section class="reader" aria-label="Visualização do arquivo">
+          <div class="reader-toolbar">
+            <div>
+              <p id="fileType" class="eyebrow">VISUALIZADOR</p>
+              <h2 id="documentTitle">Selecione um arquivo</h2>
+            </div>
+            <a id="downloadButton" class="button button-download is-disabled" download aria-disabled="true">Baixar arquivo</a>
+          </div>
+          <div id="viewer" class="viewer" tabindex="-1">
+            <div class="status">Lendo a pasta arquivos/…</div>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <!-- Bibliotecas usadas apenas para DOCX e PPTX; o restante funciona sem rede. -->
+    <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

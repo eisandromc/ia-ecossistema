@@ -1,0 +1,304 @@
+# Manifesto de recursos — ecossistema orientado por prompts
+# Define os recursos, sem autenticar ou executar ações externas.
+nome: Ecossistema Empresarial AllTech — Cenários Didáticos
+versao: 1.2.0
+idioma: pt-BR
+autonomia: perguntar-antes
+raiz: dom.empresa-alltech
+recursos:
+- id: dom.empresa-alltech
+  arquivo: 00-dominio/dom.empresa-alltech.md
+  usa:
+  - orq.corporativo
+  - orq.comercial-implantacao
+  - orq.auditoria-gate
+  - orq.integracoes
+- id: orq.corporativo
+  arquivo: 10-orquestradores/orq.corporativo.md
+  pai: dom.empresa-alltech
+  usa:
+  - ag.analista-negocios
+  - ag.financeiro-erp
+  - ag.dados-bi
+  - ag.documentacao
+  - wf.analise-faturamento
+  - wf.desvios-forja
+  - wf.atas-riscos-acoes
+  - ma.conselho-desvios
+- id: orq.comercial-implantacao
+  arquivo: 10-orquestradores/orq.comercial-implantacao.md
+  pai: dom.empresa-alltech
+  usa:
+  - ag.crm-comercial
+  - ag.compras-suprimentos
+  - ag.logistica-operacoes
+  - ag.projetos-implantacao
+  - wf.ciclo-comercial
+  - wf.compras
+  - wf.implantacao-componentes
+- id: orq.auditoria-gate
+  arquivo: 10-orquestradores/orq.auditoria-gate.md
+  pai: dom.empresa-alltech
+  usa:
+  - ag.hcm-pessoas
+  - ag.suporte-incidentes
+  - ag.seguranca
+  - ag.qualidade-compliance
+  - wf.suporte-incidentes
+  - wf.capacitacao-hcm
+  - ma.conselho-riscos
+- id: ma.conselho-desvios
+  arquivo: 20-multiagentes/ma.conselho-desvios.md
+  pai: orq.corporativo
+  usa:
+  - ag.financeiro-erp
+  - ag.dados-bi
+  - ag.analista-negocios
+- id: ma.conselho-riscos
+  arquivo: 20-multiagentes/ma.conselho-riscos.md
+  pai: orq.auditoria-gate
+  usa:
+  - ag.seguranca
+  - ag.qualidade-compliance
+  - ag.suporte-incidentes
+- id: ag.analista-negocios
+  arquivo: 30-agentes/ag.analista-negocios.md
+  pai: orq.corporativo
+  usa:
+  - sk.contrato-dados
+  - sk.handoff
+- id: ag.financeiro-erp
+  arquivo: 30-agentes/ag.financeiro-erp.md
+  pai: orq.corporativo
+  usa:
+  - sk.analise-desvios
+  - sk.contrato-dados
+  - rag.fontes-financeiras
+  - sa.reconciliador-financeiro
+- id: ag.crm-comercial
+  arquivo: 30-agentes/ag.crm-comercial.md
+  pai: orq.comercial-implantacao
+  usa:
+  - sk.contrato-dados
+  - sk.handoff
+- id: ag.hcm-pessoas
+  arquivo: 30-agentes/ag.hcm-pessoas.md
+  pai: orq.auditoria-gate
+  usa:
+  - sk.contrato-dados
+  - sk.gate-aprovacao
+- id: ag.compras-suprimentos
+  arquivo: 30-agentes/ag.compras-suprimentos.md
+  pai: orq.comercial-implantacao
+  usa:
+  - sk.gate-aprovacao
+  - sk.contrato-dados
+- id: ag.logistica-operacoes
+  arquivo: 30-agentes/ag.logistica-operacoes.md
+  pai: orq.comercial-implantacao
+  usa:
+  - sk.contrato-dados
+  - sk.handoff
+- id: ag.suporte-incidentes
+  arquivo: 30-agentes/ag.suporte-incidentes.md
+  pai: orq.auditoria-gate
+  usa:
+  - sk.handoff
+  - sk.gate-aprovacao
+  - sa.classificador-incidente
+- id: ag.dados-bi
+  arquivo: 30-agentes/ag.dados-bi.md
+  pai: orq.corporativo
+  usa:
+  - sk.contrato-dados
+  - sk.analise-desvios
+  - rag.fontes-financeiras
+  - sa.reconciliador-financeiro
+- id: ag.projetos-implantacao
+  arquivo: 30-agentes/ag.projetos-implantacao.md
+  pai: orq.comercial-implantacao
+  usa:
+  - sk.handoff
+  - sk.gate-aprovacao
+- id: ag.seguranca
+  arquivo: 30-agentes/ag.seguranca.md
+  pai: orq.auditoria-gate
+  usa:
+  - sk.gate-aprovacao
+  - rag.governanca
+- id: ag.documentacao
+  arquivo: 30-agentes/ag.documentacao.md
+  pai: orq.corporativo
+  usa:
+  - sk.handoff
+  - rag.governanca
+- id: ag.qualidade-compliance
+  arquivo: 30-agentes/ag.qualidade-compliance.md
+  pai: orq.auditoria-gate
+  usa:
+  - sk.gate-aprovacao
+  - sk.contrato-dados
+  - rag.governanca
+- id: sa.reconciliador-financeiro
+  arquivo: 40-subagentes/sa.reconciliador-financeiro.md
+  pai: ag.financeiro-erp
+- id: sa.classificador-incidente
+  arquivo: 40-subagentes/sa.classificador-incidente.md
+  pai: ag.suporte-incidentes
+- id: wf.analise-faturamento
+  arquivo: 50-workflows/wf.analise-faturamento.md
+  pai: orq.corporativo
+  usa:
+  - ag.financeiro-erp
+  - ag.dados-bi
+  - sk.analise-desvios
+- id: wf.ciclo-comercial
+  arquivo: 50-workflows/wf.ciclo-comercial.md
+  pai: orq.comercial-implantacao
+  usa:
+  - ag.crm-comercial
+  - ag.analista-negocios
+  - sk.handoff
+- id: wf.compras
+  arquivo: 50-workflows/wf.compras.md
+  pai: orq.comercial-implantacao
+  usa:
+  - ag.compras-suprimentos
+  - sk.gate-aprovacao
+- id: wf.implantacao-componentes
+  arquivo: 50-workflows/wf.implantacao-componentes.md
+  pai: orq.comercial-implantacao
+  usa:
+  - ag.projetos-implantacao
+  - ag.analista-negocios
+  - sk.handoff
+- id: wf.desvios-forja
+  arquivo: 50-workflows/wf.desvios-forja.md
+  pai: orq.corporativo
+  usa:
+  - ag.financeiro-erp
+  - ag.dados-bi
+  - sk.analise-desvios
+- id: wf.suporte-incidentes
+  arquivo: 50-workflows/wf.suporte-incidentes.md
+  pai: orq.auditoria-gate
+  usa:
+  - ag.suporte-incidentes
+  - ag.seguranca
+  - sk.gate-aprovacao
+- id: wf.atas-riscos-acoes
+  arquivo: 50-workflows/wf.atas-riscos-acoes.md
+  pai: orq.corporativo
+  usa:
+  - ag.documentacao
+  - sk.handoff
+  - sk.gate-aprovacao
+- id: wf.capacitacao-hcm
+  arquivo: 50-workflows/wf.capacitacao-hcm.md
+  pai: orq.auditoria-gate
+  usa:
+  - ag.hcm-pessoas
+  - sk.gate-aprovacao
+- id: sk.contrato-dados
+  arquivo: 60-skills/sk.contrato-dados/SKILL.md
+  pai: dom.empresa-alltech
+- id: sk.handoff
+  arquivo: 60-skills/sk.handoff/SKILL.md
+  pai: dom.empresa-alltech
+- id: sk.gate-aprovacao
+  arquivo: 60-skills/sk.gate-aprovacao/SKILL.md
+  pai: dom.empresa-alltech
+- id: sk.analise-desvios
+  arquivo: 60-skills/sk.analise-desvios/SKILL.md
+  pai: dom.empresa-alltech
+- id: rag.fontes-financeiras
+  arquivo: 70-rag/rag.fontes-financeiras.md
+  pai: dom.empresa-alltech
+- id: rag.governanca
+  arquivo: 70-rag/rag.governanca.md
+  pai: dom.empresa-alltech
+- id: orq.integracoes
+  arquivo: 10-orquestradores/orq.integracoes.md
+  pai: dom.empresa-alltech
+  usa:
+  - ag.google-drive
+  - ag.gmail
+  - ag.github
+  - wf.drive-documentos
+  - wf.gmail-respostas
+  - wf.github-projetos
+  - wf.atendimento-integrado
+  - ma.revisao-integracoes
+- id: ag.google-drive
+  arquivo: 30-agentes/ag.google-drive.md
+  pai: orq.integracoes
+  usa:
+  - sk.conector-drive
+  - sk.gate-externo
+- id: ag.gmail
+  arquivo: 30-agentes/ag.gmail.md
+  pai: orq.integracoes
+  usa:
+  - sk.conector-gmail
+  - sk.gate-externo
+- id: ag.github
+  arquivo: 30-agentes/ag.github.md
+  pai: orq.integracoes
+  usa:
+  - sk.conector-github
+  - sk.gate-externo
+- id: ma.revisao-integracoes
+  arquivo: 20-multiagentes/ma.revisao-integracoes.md
+  pai: orq.integracoes
+  usa:
+  - ag.google-drive
+  - ag.gmail
+  - ag.github
+  - ag.seguranca
+- id: wf.drive-documentos
+  arquivo: 50-workflows/wf.drive-documentos.md
+  pai: orq.integracoes
+  usa:
+  - ag.google-drive
+  - ag.documentacao
+  - sk.gate-externo
+- id: wf.gmail-respostas
+  arquivo: 50-workflows/wf.gmail-respostas.md
+  pai: orq.integracoes
+  usa:
+  - ag.gmail
+  - ag.crm-comercial
+  - sk.gate-externo
+- id: wf.github-projetos
+  arquivo: 50-workflows/wf.github-projetos.md
+  pai: orq.integracoes
+  usa:
+  - ag.github
+  - ag.projetos-implantacao
+  - sk.gate-externo
+- id: wf.atendimento-integrado
+  arquivo: 50-workflows/wf.atendimento-integrado.md
+  pai: orq.integracoes
+  usa:
+  - ag.gmail
+  - ag.github
+  - ag.google-drive
+  - ma.revisao-integracoes
+  - sk.gate-externo
+- id: sk.conector-drive
+  arquivo: 60-skills/sk.conector-drive/SKILL.md
+  pai: dom.empresa-alltech
+- id: sk.conector-gmail
+  arquivo: 60-skills/sk.conector-gmail/SKILL.md
+  pai: dom.empresa-alltech
+- id: sk.conector-github
+  arquivo: 60-skills/sk.conector-github/SKILL.md
+  pai: dom.empresa-alltech
+- id: sk.gate-externo
+  arquivo: 60-skills/sk.gate-externo/SKILL.md
+  pai: dom.empresa-alltech
+plataformas:
+- chatgpt
+- claude
+- copilot
+testes: 90-testes/casos.md

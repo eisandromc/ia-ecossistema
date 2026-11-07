@@ -1,0 +1,23 @@
+{
+  "name": "painel-fabrica-ia",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Console interativo da Fábrica de IA: navegue pela hierarquia do ecossistema e veja as chamadas entre recursos, com múltiplos LLMs configurados no .env.",
+  "type": "module",
+  "main": "server.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "verificar": "node scripts/verificar.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.6.0",
+    "dotenv": "^18.0.9",
+    "express": "^5.3.0",
+    "js-yaml": "^4.3.2",
+    "jszip": "^3.10.2"
+  }
+}
