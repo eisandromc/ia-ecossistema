@@ -1,0 +1,34 @@
+name: Relato de defeito
+description: Informe um comportamento inesperado sem expor dados sensíveis.
+title: "[bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Não inclua senhas, tokens, chaves de API, dados pessoais ou conteúdo confidencial.
+  - type: textarea
+    id: context
+    attributes:
+      label: Contexto
+      description: Onde ocorreu o problema?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Como reproduzir
+      description: Descreva os passos mínimos.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Resultado esperado
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidências não sensíveis
+      description: Inclua mensagens de erro sem segredos.

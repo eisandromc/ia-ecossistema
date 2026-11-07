@@ -1,0 +1,45 @@
+name: Painel CI
+
+on:
+  pull_request:
+    paths:
+      - "painel/**"
+      - ".github/workflows/painel-ci.yml"
+  push:
+    branches:
+      - develop
+      - test
+      - main
+    paths:
+      - "painel/**"
+      - ".github/workflows/painel-ci.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: painel-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: painel-tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: painel
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: painel/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Run tests
+        run: npm test
+      - name: Verify local environment
+        run: npm run verificar

@@ -1,0 +1,50 @@
+name: Branch Flow
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - test
+      - main
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+      - edited
+
+permissions:
+  contents: read
+
+jobs:
+  branch-flow:
+    name: branch-flow
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate promotion path
+        env:
+          BASE_BRANCH: ${{ github.base_ref }}
+          HEAD_BRANCH: ${{ github.head_ref }}
+        run: |
+          set -euo pipefail
+
+          case "$BASE_BRANCH" in
+            develop)
+              if [[ "$HEAD_BRANCH" =~ ^(feature|fix|docs|chore|refactor|security|hotfix)/[a-z0-9][a-z0-9._-]*$ ]]; then
+                echo "Allowed: $HEAD_BRANCH -> develop"
+              else
+                echo "::error::Only work branches may target develop."
+                exit 1
+              fi
+              ;;
+            test)
+              [[ "$HEAD_BRANCH" == "develop" ]] || { echo "::error::Only develop may target test."; exit 1; }
+              ;;
+            main)
+              [[ "$HEAD_BRANCH" == "test" ]] || { echo "::error::Only test may target main."; exit 1; }
+              ;;
+            *)
+              echo "::error::Unsupported target branch: $BASE_BRANCH"
+              exit 1
+              ;;
+          esac

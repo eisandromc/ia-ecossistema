@@ -1,0 +1,21 @@
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+!.env.exemplo
+
+# Dependencies and coverage
+node_modules/
+coverage/
+.nyc_output/
+
+# Logs and runtime files
+*.log
+*.pid
+
+# Operating systems and editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp

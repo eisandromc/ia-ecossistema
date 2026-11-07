@@ -1,0 +1,32 @@
+name: Proposta de melhoria
+description: Sugira uma evolução para o ecossistema.
+title: "[melhoria]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problema ou oportunidade
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposta
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impacto esperado
+  - type: dropdown
+    id: area
+    attributes:
+      label: Área principal
+      options:
+        - Ecossistema educacional
+        - Ecossistema empresarial
+        - Painel
+        - Ferramentas
+        - Documentação
+        - Governança
